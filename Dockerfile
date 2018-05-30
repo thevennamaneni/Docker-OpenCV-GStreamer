@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Junjue Wang <junjuew@cs.cmu.edu>
+MAINTAINER Sai Narasimha <sainarasimha.v@gmail.com>
 
 # Install gstreamer and opencv dependencies
 RUN \ 
@@ -26,7 +26,7 @@ RUN \
         git \
         pkg-config \
         libjpeg8-dev \
-        libtiff4-dev \
+        libtiff5-dev \
         libjasper-dev \
         libpng12-dev \
         libgtk2.0-dev \
@@ -37,11 +37,11 @@ RUN \
         libatlas-base-dev \
         gfortran \
         libhdf5-dev \
-        python2.7 \
-        python2.7-dev && \
+        python3 \
+        python3-dev && \
 
     wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
+    python3 get-pip.py && \
     pip install numpy && \
 
     apt-get autoclean && apt-get clean && \
@@ -62,6 +62,8 @@ RUN \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D CMAKE_INSTALL_PREFIX=/usr/local \
+        -D PYTHON_EXECUTABLE=/usr/bin/python3 \
+        -D BUILD_opencv_python3=ON \
         -D INSTALL_C_EXAMPLES=OFF \
         -D INSTALL_PYTHON_EXAMPLES=ON \
         -D BUILD_EXAMPLES=ON .. && \
